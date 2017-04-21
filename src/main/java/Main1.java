@@ -19,7 +19,7 @@ public class Main1 {
                 if (files[i].getName().contains(".txt")) {
                     try {
                         ParsingLine parser = new ParsingLine();
-                        fileConverter.convert("D:\\java Projects\\ExSalon\\data\\new\\"+i+".txt", "D:\\java Projects\\ExSalon\\data\\buffer\\"+i+".txt", "windows-1251", "UTF8");
+                        fileConverter.convert(files[i].getPath(), "D:\\java Projects\\ExSalon\\data\\buffer\\"+i+".txt", "windows-1251", "UTF8");
                         File file = new File("D:\\java Projects\\ExSalon\\data\\buffer\\"+i+".txt");
                         //создаем объект FileReader для объекта File
                         FileReader fr = new FileReader(file);
