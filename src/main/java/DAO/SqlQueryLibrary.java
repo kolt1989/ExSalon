@@ -5,6 +5,6 @@ package DAO;
  */
 public class SqlQueryLibrary {
 
-    String insertTable = "INSERT INTO public.ex_salon_details (datetime,service,cost,ref,phone,updatetime)" +
-            "VALUES (?,?,?,?,?,?)";
+    String insertTable = "INSERT INTO public.ex_salon_details (datetime,service,cost,ref,phone,updatetime,salon)" +
+            "VALUES (?,?,?,?,?,?,?)";
 }

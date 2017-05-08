@@ -1,49 +1,21 @@
-import DAO.TransactionListDao;
-import parsing.ConvertFileUnicode;
-import parsing.ParsingLine;
+import business.WorkWithData;
 
-import java.io.*;
+import static configuration.Config.prop;
 
 /**
- * Created by Kozak on 02.03.2017.
+ * Created by Kozak on 08.05.2017.
  */
 public class Main {
-    public static void main(String[] args) throws IOException {
-        ParsingLine parser = new ParsingLine();
-        ConvertFileUnicode fileConverter = new ConvertFileUnicode();
-
+    public static void main(String[] args) {
+        WorkWithData workWithData =new WorkWithData();
+        workWithData.convertAndWriteToDb(prop.getProperty("salon_1_data"),prop.getProperty("salon_1_convert"));
+        workWithData.convertAndWriteToDb(prop.getProperty("salon_2_data"),prop.getProperty("salon_2_convert"));
+        workWithData.convertAndWriteToDb(prop.getProperty("salon_3_data"),prop.getProperty("salon_3_convert"));
+        System.out.println("Work is finished!");
         try {
-            fileConverter.convert("D:\\java Projects\\ExSalon\\data\\4.txt","D:\\java Projects\\ExSalon\\data\\buffer\\1.txt","windows-1251","UTF8");
-            File file = new File("D:\\java Projects\\ExSalon\\data\\buffer\\1.txt");
-            //создаем объект FileReader для объекта File
-            FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
-            BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
-            String line = reader.readLine();
-            while (line != null) {
-                if (line.toString().equals(" ")||line.toString().contains("Кількість")||line.toString().contains("Cума")||line.toString().equals("")){
-                    System.out.println(line.toString());
-                    line = reader.readLine();
-                    continue;
-                }
-               // System.out.println(line);
-                // считываем остальные строки в цикле
-               // System.out.println(line.toString());
-                parser.parsingLine(line);
-                line = reader.readLine();
-            }
-            TransactionListDao transactionListDao = new TransactionListDao();
-            transactionListDao.inSertTranzaction(parser.transactionsList);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            Thread.sleep(60000);
+        } catch (InterruptedException e) {
+            System.out.println("Can't sleep");
         }
-
-        System.out.println("Finish");
-
-
-
     }
 }

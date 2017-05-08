@@ -1,30 +1,28 @@
 package DAO;
-
 import DTO.FullTransactionDTO;
-
 import java.sql.*;
 import java.util.ArrayList;
-
+import static configuration.Config.prop;
 /**
  * Created by user on 03.03.2017.
  */
 public class TransactionListDao {
     public static Connection con;
-    String url ="jdbc:postgresql://localhost:5432/postgres";
-    String user = "postgres";
-    String password = "6060645";
+    String url =prop.getProperty("url");
+    String user = prop.getProperty("user");
+    String password = prop.getProperty("password");
 
     java.util.Date now = new java.util.Date();
 
     PreparedStatement preparedStatement= null;
-    public void inSertTranzaction(ArrayList<FullTransactionDTO> transactionsList)  {
+    public void insertTranzaction(ArrayList<FullTransactionDTO> transactionsList,String salonName)  {
         java.util.Date now = new java.util.Date();
         long currentTime = now.getTime();
         Timestamp updateTime = new Timestamp(currentTime);
 
         SqlQueryLibrary query=new SqlQueryLibrary();
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(prop.getProperty("claspath"));
             con = DriverManager.getConnection(url, user, password);
             con.setAutoCommit(false);
             preparedStatement =con.prepareStatement(query.insertTable);
@@ -36,6 +34,7 @@ public class TransactionListDao {
                 preparedStatement.setDouble(4, transactionsList.get(i).ref);
                 preparedStatement.setString(5, transactionsList.get(i).phone);
                 preparedStatement.setTimestamp(6, updateTime);
+                preparedStatement.setString(7, salonName);
                 preparedStatement.executeUpdate();
             }
             con.commit();
